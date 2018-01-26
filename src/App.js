@@ -9,9 +9,10 @@ class App extends React.Component {
             seriesList: [],
             seriesEpisodesList: []
         };
+        this.handleChange = this.handleChange.bind(this);
     }
-
-    componentDidMount() {
+    handleChange(event) {
+        this.setState({value: event.target.value.toLowerCase()});
 
         fetch('seriesList.json',{})
             .then(response => response.json())
@@ -23,19 +24,24 @@ class App extends React.Component {
                 console.log(error);
             })
             .then(function () {
-                alert("j'ai fait ce que j'ai pu");
+                // alert("j'ai fait ce que j'ai pu");
             });
 
     }
+    componentDidMount() {
+    }
 
-    render() {
+        render() {
         return (
             <div>
                 <ul>
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
                     {this.state.seriesList.length ?
                         this.state.seriesList.map(item => <li key={item.id}>{item.seriesName}</li>)
                         : <li>Loading...</li>
                     }
+                    <p>{this.state.value} </p>
+
                 </ul>
             </div>
         )
